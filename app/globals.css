@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+
+html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+
+body {
+  @apply font-body text-ink antialiased;
+  min-height: 100vh;
+  background-color: #FFF4DE;
+  background-image:
+    radial-gradient(900px 420px at 85% -5%, rgba(247,183,51,.38), transparent 70%),
+    radial-gradient(700px 380px at -5% 10%, rgba(211,47,30,.12), transparent 70%);
+}
+
+::selection { background: #F7B733; color: #2B140D; }
+
+/* Visible keyboard focus everywhere (accessibility) */
+:focus-visible { outline: 3px solid #D32F1E; outline-offset: 2px; border-radius: 10px; }
+
+/* Red-and-white tablecloth */
+.gingham {
+  background-color: #fff;
+  background-image:
+    linear-gradient(90deg, rgba(211,47,30,.30) 50%, transparent 50%),
+    linear-gradient(rgba(211,47,30,.30) 50%, transparent 50%);
+  background-size: 22px 22px;
+}
+.gingham-dark {
+  background-color: #43251A;
+  background-image:
+    linear-gradient(90deg, rgba(255,244,222,.07) 50%, transparent 50%),
+    linear-gradient(rgba(255,244,222,.07) 50%, transparent 50%);
+  background-size: 22px 22px;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-[44px] cursor-pointer select-none items-center justify-center gap-2 rounded-full px-6 py-2.5
+           font-bold transition duration-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-tomato text-white shadow-pop hover:bg-tomato-dark active:translate-y-[3px] active:shadow-none;
+  }
+  .btn-cheese {
+    @apply bg-cheese text-oven shadow-[0_4px_0_#b9831a] hover:bg-cheese-light active:translate-y-[3px] active:shadow-none;
+  }
+  .btn-ghost {
+    @apply border-2 border-crust/40 bg-white/70 text-ink hover:border-tomato hover:bg-white hover:text-tomato;
+  }
+  .btn-dark {
+    @apply bg-white/10 text-dough hover:bg-white/20;
+  }
+  .icon-btn {
+    @apply inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full transition duration-200;
+  }
+  .input {
+    @apply w-full rounded-2xl border-2 border-crust/30 bg-white/80 px-4 py-2.5 text-ink placeholder:text-muted/70
+           transition focus:border-tomato focus:bg-white focus:outline-none;
+  }
+  .chip {
+    @apply inline-flex min-h-[36px] cursor-pointer items-center rounded-full border-2 border-crust/30 bg-white/60 px-4 text-sm font-bold
+           text-ink transition duration-200 hover:border-tomato hover:text-tomato;
+  }
+  .chip[aria-pressed='true'] { @apply border-tomato bg-tomato text-white hover:text-white; }
+  .eyebrow { @apply text-xs font-bold uppercase tracking-[.2em] text-tomato; }
+  .section-title { @apply font-display text-2xl font-bold md:text-3xl; }
+}
+
+/* Seek / volume sliders: filled part is tomato sauce */
+input[type='range'] {
+  -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; height: 24px; width: 100%;
+  --p: 0%;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  height: 6px; border-radius: 999px;
+  background: linear-gradient(to right, var(--fill, #F7B733) var(--p), var(--track, rgba(255,244,222,.25)) var(--p));
+}
+input[type='range']::-moz-range-track { height: 6px; border-radius: 999px; background: var(--track, rgba(255,244,222,.25)); }
+input[type='range']::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--fill, #F7B733); }
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none; height: 16px; width: 16px; margin-top: -5px; border-radius: 50%;
+  background: #fff; border: 3px solid var(--fill, #F7B733); box-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+input[type='range']::-moz-range-thumb { height: 12px; width: 12px; border-radius: 50%; background: #fff; border: 3px solid var(--fill, #F7B733); }
+.range-light { --fill: #D32F1E; --track: rgba(138,75,31,.2); }
+
+/* Little equaliser bars on the song that's playing */
+.eq-bar { @apply w-[3px] rounded-full bg-current; animation: eq 900ms ease-in-out infinite; height: 40%; }
+.eq-bar:nth-child(2) { animation-delay: .2s; }
+.eq-bar:nth-child(3) { animation-delay: .4s; }
+.eq-paused .eq-bar { animation-play-state: paused; }
+
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .float-heart { display: none !important; }
+}
